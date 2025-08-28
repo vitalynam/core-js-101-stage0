@@ -201,8 +201,26 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  if (width < 1 || height < 1) return '';
+
+  const rectangle = [];
+
+  // Верхняя граница
+  rectangle.push(`┌${'─'.repeat(width - 2)}┐`);
+
+  // Средние строки
+  for (let i = 0; i < height - 2; i += i + 1) {
+    rectangle.push(`│${' '.repeat(width - 2)}│`);
+  }
+
+  // Нижняя граница (если высота больше 1)
+  if (height > 1) {
+    rectangle.push(`└${'─'.repeat(width - 2)}┘`);
+  }
+
+  // Возврат строки с добавлением финального \n
+  return `${rectangle.join('\n')}\n`;
 }
 
 /**
@@ -221,8 +239,12 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  return str.replace(/[A-Za-z]/g, (char) => {
+    const base = char <= 'Z' ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
+    const code = char.charCodeAt(0) - base;
+    return String.fromCharCode(((code + 13) % 26) + base);
+  });
 }
 
 /**
@@ -238,8 +260,11 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  if (typeof value === 'string' || value instanceof String) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -266,8 +291,31 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const ranks = [
+    'A',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    'J',
+    'Q',
+    'K',
+  ];
+  const suits = ['♣', '♦', '♥', '♠'];
+
+  const rank = value.slice(0, -1);
+  const suit = value.slice(-1);
+
+  const rankIndex = ranks.indexOf(rank);
+  const suitIndex = suits.indexOf(suit);
+
+  return suitIndex * ranks.length + rankIndex;
 }
 
 module.exports = {
