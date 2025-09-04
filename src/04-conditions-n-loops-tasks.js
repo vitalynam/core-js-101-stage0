@@ -70,8 +70,12 @@ function getFactorial(n) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  const length = n2 - n1 + 1; // Количество чисел в диапазоне
+  return Array.from({ length }, (_, i) => n1 + i).reduce(
+    (acc, el) => acc + el,
+    0
+  );
 }
 
 /**
@@ -89,8 +93,11 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  if (a + b > c && a + c > b && b + c > a) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -196,8 +203,25 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let str = '';
+  if (isStartIncluded === true) {
+    str = '[';
+  } else {
+    str = '(';
+  }
+  if (b < a) {
+    str += `${b}, ${a}`;
+  } else {
+    str += `${a}, ${b}`;
+  }
+  if (isEndIncluded === true) {
+    str += ']';
+  } else {
+    str += ')';
+  }
+
+  return str;
 }
 
 /**
